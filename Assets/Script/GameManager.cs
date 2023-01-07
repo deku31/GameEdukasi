@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 enum JenisPilihan
 {
@@ -9,19 +11,102 @@ enum JenisPilihan
 public class GameManager : MonoBehaviour
 {
     [SerializeField] JenisPilihan jenis = JenisPilihan.BidangRuang;
-    public List<GameObject> CharacterPrefabs;
+
+    [Header("UI")]
+    public Text Header;
+
+    [Header("Bagian A")]
+    
+    public List<GameObject> CharacterPrefabsA;
+    public List<GameObject> JawabanPrefab;
+    public List<GameObject> tipuanPrefab;
+   
+
+    [Header("Posisi")]
     [SerializeField]private Transform playerPosition;
-    // Start is called before the first frame update
+    /* untuk posisi jawaban
+     * 0=posisi kanan
+     * 1=posisi kiri
+     */
+    public List<Transform> PosisijawabanBagA;
+    [SerializeField] List<bool> terisi;
+
+    [SerializeField] PlayerMovement playerscript;
+    private int randomA;
+    public int RandomJawaban;//jawaban akan dirandom kanan atau kiri
+
+    private void Awake()
+    {
+        RandomJawaban = Random.RandomRange(0, 2);
+        for (int i = 0; i < terisi.Count; i++)
+        {
+            terisi[i] = false;
+        }
+    }
     void Start()
     {
+       
+        Time.timeScale = 1;
+        Header.enabled = false;
         if (jenis==JenisPilihan.BidangRuang)
         {
-            Instantiate(CharacterPrefabs[0], playerPosition);
+            randomA = Random.RandomRange(0, CharacterPrefabsA.Count);
+            Instantiate(CharacterPrefabsA[randomA], playerPosition);
+        }
+        if (playerscript == null)
+        {
+            playerscript = FindObjectOfType<PlayerMovement>();
+            print(RandomJawaban);
+        }
+        if (RandomJawaban==0)//jawaban kanan
+        {
+            Instantiate(JawabanPrefab[randomA], PosisijawabanBagA[0]);
+            terisi[0] = true;
+        }
+        else if(RandomJawaban > 0)
+        {
+            Instantiate(JawabanPrefab[randomA], PosisijawabanBagA[1]);
+            terisi[1] = true;
+        }
+        //================mengisi posisi yang kosong=======================================
+        if (terisi[0] == false)
+        {
+            if (randomA==0)
+            {
+                Instantiate(JawabanPrefab[randomA + 1], PosisijawabanBagA[0]);
+            }
+            else
+            {
+                Instantiate(JawabanPrefab[0], PosisijawabanBagA[0]);
+            }
+        }
+        else
+        {
+            if (randomA == 0)
+            {
+                Instantiate(JawabanPrefab[randomA + 1], PosisijawabanBagA[1]);
+            }
+            else if(randomA>0)
+            {
+                Instantiate(JawabanPrefab[0], PosisijawabanBagA[1]);
+            }
         }
     }
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0);
+        }
+        if (playerscript.benar==true)
+        {
+            Header.text = "Benar";
+        }
+        else
+        {
+            Header.text = "salah";
+        }
+       
     }
 }

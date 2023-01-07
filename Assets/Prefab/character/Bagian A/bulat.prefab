@@ -71,6 +71,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: bulat
       objectReference: {fileID: 0}
+    - target: {fileID: 1996398266188169929, guid: 9790b8bf538066448b6869544cdeade8, type: 3}
+      propertyPath: kanan
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 983549907885327008, guid: 9790b8bf538066448b6869544cdeade8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9790b8bf538066448b6869544cdeade8, type: 3}
