@@ -9,8 +9,9 @@ public class PlayerMovement : MonoBehaviour
     Vector3 playerVelocity;
     [SerializeField] float moveSpeed=10f;
     public bool benar;
-    [SerializeField] Vector3 target;
+    [SerializeField] Vector2 target;
     Transform _terget;
+    private bool isDragging;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -23,42 +24,36 @@ public class PlayerMovement : MonoBehaviour
         player = gameObject.AddComponent<Rigidbody2D>();
         player.isKinematic = true;
         target = transform.position;
+
     }
     private void Update()
     {
 #if UNITY_ANDROID
-        if (Input.GetMouseButton(0)&&Time.timeScale>0)
+
+        if (isDragging==true)
         {
-            target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            target.z = transform.position.z;
+            target = Camera.main.ScreenToWorldPoint(Input.mousePosition)-transform.position;
             target.y = transform.position.y;
+            player.MovePosition(Vector2.Lerp(transform.position, target, moveSpeed*Time.deltaTime));
         }
-        _terget.position = target;
-#endif
-    }
-    void FixedUpdate()
-    {
-        float Horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        Vector3 move = new Vector3(Horizontal, 0, vertical);
-#if UNITY_STADALONE_WIN
-        
-        if (move.magnitude != 0)
-        {
-            player.MovePosition(player.transform.position + move * Time.deltaTime * moveSpeed);
-        }
-#endif
-#if UNITY_ANDROID
-        player.MovePosition(Vector2.Lerp(transform.position, target, moveSpeed));
 #endif
     }
 
+    public void OnMouseDown()
+    {
+        isDragging = true;
+    }
+    public void OnMouseUp()
+    {
+        isDragging = false;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (gm.RandomJawaban == 0)//jawaban kanan
         {
             if (collision.transform.tag == "Kanan")
             {
+
                 benar = true;
                 print("Benar");
             }

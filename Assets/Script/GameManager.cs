@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public Text Header;
     public GameObject EndingPanel;
+    public GameObject PanelPause;
 
     [Header("Bagian A")]
     
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-       
+        PanelPause.SetActive(false);
         Time.timeScale = 1;
         Header.enabled = false;
         EndingPanel.SetActive(false);
@@ -71,7 +72,6 @@ public class GameManager : MonoBehaviour
             Instantiate(JawabanPrefab[randomA], PosisijawabanBagA[1]);
             terisi[1] = true;
         }
-        print("Random "+randomA);
         //================mengisi posisi yang kosong=======================================
         int randomR=Random.RandomRange(0,2);
         if (terisi[0] == false)
@@ -119,5 +119,14 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(NamaScene);
     }
-    
+    public void Pause()
+    {
+        PanelPause.SetActive(true);
+        Time.timeScale = 0;
+    }
+    public void Resume()
+    {
+        PanelPause.SetActive(false);
+        Time.timeScale = 1;
+    }
 }
