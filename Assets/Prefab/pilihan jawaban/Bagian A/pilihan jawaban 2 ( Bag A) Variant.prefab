@@ -54,18 +54,18 @@ PrefabInstance:
     - target: {fileID: 4439303486896641548, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
+      objectReference: {fileID: 21300000, guid: 639b36142618f6845a4744f2a209444d, type: 3}
     - target: {fileID: 4439303486896641548, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 0.9528302
       objectReference: {fileID: 0}
     - target: {fileID: 4439303486896641548, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.9528302
       objectReference: {fileID: 0}
     - target: {fileID: 4439303486896641548, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
       propertyPath: m_Color.r
-      value: 0.9987322
+      value: 0.9528302
       objectReference: {fileID: 0}
     - target: {fileID: 5435228044045067793, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
       propertyPath: m_Name
@@ -73,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5435228044045067793, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Jawaban
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}

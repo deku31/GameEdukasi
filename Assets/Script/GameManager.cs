@@ -14,12 +14,12 @@ public class GameManager : MonoBehaviour
 
     [Header("UI")]
     public Text Header;
+    public GameObject EndingPanel;
 
     [Header("Bagian A")]
     
     public List<GameObject> CharacterPrefabsA;
     public List<GameObject> JawabanPrefab;
-    public List<GameObject> tipuanPrefab;
    
 
     [Header("Posisi")]
@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
      * 1=posisi kiri
      */
     public List<Transform> PosisijawabanBagA;
+    public List<Transform> Endposisi;
+
     [SerializeField] List<bool> terisi;
 
     [SerializeField] PlayerMovement playerscript;
@@ -48,6 +50,7 @@ public class GameManager : MonoBehaviour
        
         Time.timeScale = 1;
         Header.enabled = false;
+        EndingPanel.SetActive(false);
         if (jenis==JenisPilihan.BidangRuang)
         {
             randomA = Random.RandomRange(0, CharacterPrefabsA.Count);
@@ -68,12 +71,14 @@ public class GameManager : MonoBehaviour
             Instantiate(JawabanPrefab[randomA], PosisijawabanBagA[1]);
             terisi[1] = true;
         }
+        print("Random "+randomA);
         //================mengisi posisi yang kosong=======================================
+        int randomR=Random.RandomRange(0,2);
         if (terisi[0] == false)
         {
             if (randomA==0)
             {
-                Instantiate(JawabanPrefab[randomA + 1], PosisijawabanBagA[0]);
+                Instantiate(JawabanPrefab[1+randomR], PosisijawabanBagA[0]);
             }
             else
             {
@@ -102,11 +107,17 @@ public class GameManager : MonoBehaviour
         if (playerscript.benar==true)
         {
             Header.text = "Benar";
+            Header.color = new Color32(250, 0, 255, 255);
         }
         else
         {
             Header.text = "salah";
+            Header.color = new Color32(255, 0, 0, 255);
         }
-       
     }
+    public void Navigator(string NamaScene)//masukan nama scene yang di tuju
+    {
+        SceneManager.LoadScene(NamaScene);
+    }
+    
 }
