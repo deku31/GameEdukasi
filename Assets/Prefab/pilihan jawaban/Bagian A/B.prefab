@@ -69,11 +69,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5435228044045067793, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
       propertyPath: m_Name
-      value: pilihan jawaban 2 ( Bag A) Variant
+      value: B
       objectReference: {fileID: 0}
     - target: {fileID: 5435228044045067793, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
       propertyPath: m_TagString
       value: Jawaban
       objectReference: {fileID: 0}
+    - target: {fileID: 7245537983474955345, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
+--- !u!1 &2623776247481236105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5435228044045067793, guid: 9d3389e57d6aa1e42ade3768dd78ea35, type: 3}
+  m_PrefabInstance: {fileID: 7999599666846358680}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &159095533455038724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2623776247481236105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4de5e5f62f3e084cb53e8cb80b2e6a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

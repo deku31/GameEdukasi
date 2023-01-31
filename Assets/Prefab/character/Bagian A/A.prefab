@@ -100,6 +100,7 @@ MonoBehaviour:
   player: {fileID: 0}
   moveSpeed: 2
   benar: 0
+  salah: 0
   target: {x: 0, y: 0}
 --- !u!61 &3108912680818824670
 BoxCollider2D:

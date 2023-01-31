@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public Text Header;
     public GameObject EndingPanel;
     public GameObject PanelPause;
+    public GameObject PanelJawabBenar;
+    public GameObject PanelJawabSalah;
 
 
     [Header("Bagian A")]
@@ -44,7 +46,16 @@ public class GameManager : MonoBehaviour
     bool pause=false;
     public bool playing = false;
 
+    int idcondition;//menentukan kondisi benar atau salah
+
     string _scene;
+
+
+    public int skor;
+    public int JSSoal;//jumlah seluruh soal
+    public int JSoalBenar=0;//skor benar
+    public int JSoalSalah=0;//skor salah
+
 
     private void Awake()
     {
@@ -63,18 +74,23 @@ public class GameManager : MonoBehaviour
         PanelPause.SetActive(false);
         Time.timeScale = 1;
         EndingPanel.SetActive(false);
+        InstanceObj();
+    }
+    public void InstanceObj()
+    {
+        RandomJawaban = Random.RandomRange(0, 2);
+
         randomA = Random.RandomRange(0, CharacterPrefabsA.Count);
         Instantiate(CharacterPrefabsA[randomA], playerPosition);
 
         if (playerscript == null)
         {
             playerscript = FindObjectOfType<PlayerMovement>();
-            print(RandomJawaban);
         }
 
-        if (jenis==JenisPilihan.Huruf)
+        if (jenis == JenisPilihan.Huruf)
         {
-            
+
             if (RandomJawaban == 0)//jawaban kanan
             {
                 Instantiate(JawabanPrefab[randomA], PosisijawabanBagA[0]);
@@ -86,22 +102,22 @@ public class GameManager : MonoBehaviour
                 terisi[1] = true;
             }
             //================mengisi posisi yang kosong=======================================
-            int randomR = Random.RandomRange(0,JawabanPrefab.Count);
+            int randomR = Random.RandomRange(0, JawabanPrefab.Count);
             if (terisi[0] == false)
             {
                 if (randomA == 0)
                 {
-                    Instantiate(JawabanPrefab[randomA+randomR], PosisijawabanBagA[0]);
+                    Instantiate(JawabanPrefab[randomA + randomR], PosisijawabanBagA[0]);
                 }
-                else if(randomA>0)
+                else if (randomA > 0)
                 {
-                    if (randomR!=randomA)
+                    if (randomR != randomA)
                     {
                         Instantiate(JawabanPrefab[randomR], PosisijawabanBagA[0]);
                     }
                     else
                     {
-                        randomR = Random.RandomRange(randomA,JawabanPrefab.Count);
+                        randomR = Random.RandomRange(randomA, JawabanPrefab.Count);
                         Instantiate(JawabanPrefab[randomR], PosisijawabanBagA[0]);
                     }
                 }
@@ -114,13 +130,13 @@ public class GameManager : MonoBehaviour
                 }
                 else if (randomA > 0)
                 {
-                    if (randomR!=randomA)
+                    if (randomR != randomA)
                     {
                         Instantiate(JawabanPrefab[randomR], PosisijawabanBagA[1]);
                     }
                     else
                     {
-                        randomR = Random.RandomRange(randomA,JawabanPrefab.Count);
+                        randomR = Random.RandomRange(randomA, JawabanPrefab.Count);
                         Instantiate(JawabanPrefab[randomR], PosisijawabanBagA[1]);
                     }
                 }
@@ -133,7 +149,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (pause==false)
+            if (pause == false)
             {
                 Pause();
             }
@@ -146,7 +162,10 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }
-        if (playerscript.benar==true)
+
+        skor = (JSSoal - JSoalBenar) / 100;
+        print(skor);
+        if (playerscript.benar == true)
         {
             Header.text = "Benar";
             Header.color = new Color32(250, 0, 255, 255);
@@ -171,22 +190,70 @@ public class GameManager : MonoBehaviour
     public void Pause()
     {
         sfx._sfx(0);
+        sfx.bgm.volume = 0.6f;
         pause = true;
         PanelPause.SetActive(true);
+    }
+    public void correctAnsware()
+    {
+        idcondition = 0;
+        StartCoroutine(showConditionPanel(0.8f));
+        playing = false;
+
+    }
+    public void incorrectAnsware()
+    {
+        idcondition = 1;
+        StartCoroutine(showConditionPanel(0.8f));
+        playing = false;
     }
     public void Resume()
     {
         sfx._sfx(0);
+        sfx.bgm.volume = 1f;
         pause = false;
         PanelPause.SetActive(false);
     }
-
+    public void nextQuestion()
+    {
+        sfx.bgm.volume = 1f;
+        PanelJawabBenar.SetActive(false);
+        PanelJawabSalah.SetActive(false);
+        playing = true;
+        if (playing==true)
+        {
+            playerPosition.transform.DetachChildren();
+            foreach (var item in PosisijawabanBagA)
+            {
+                item.transform.DetachChildren();
+            }
+            for (int i = 0; i < terisi.Count; i++)
+            {
+                terisi[i] = false;
+            }
+            InstanceObj();
+        }
+    }
     public void gameover()
     {
         playing = false;
         StartCoroutine(ShowGemeover(0.5f));
     }
 
+    IEnumerator showConditionPanel(float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (idcondition ==0)
+        {
+            PanelJawabBenar.SetActive(true);
+        }
+        else
+        {
+            PanelJawabSalah.SetActive(true);
+        }
+        sfx.bgm.volume = 0.5f;
+        StopCoroutine(showConditionPanel(0));
+    }
     IEnumerator WaitingTIme(float time)
     {
         yield return new WaitForSeconds(time);

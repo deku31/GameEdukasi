@@ -9,9 +9,12 @@ public class PlayerMovement : MonoBehaviour
     Vector3 playerVelocity;
     [SerializeField] float moveSpeed=10f;
     public bool benar;
+    public bool salah=false;
     [SerializeField] Vector2 target;
     Transform _terget;
     private bool isDragging;
+    int id = 0;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -24,9 +27,16 @@ public class PlayerMovement : MonoBehaviour
         if (player==null)
         {
             player = gameObject.AddComponent<Rigidbody2D>();
+            player = gameObject.GetComponent<Rigidbody2D>();
         }
     }
-
+    private void Update()
+    {
+        if (gameObject.transform.parent==null)
+        {
+            Destroy(gameObject);
+        }
+    }
     public void OnMouseDown()
     {
         if (gm.playing==true)
@@ -55,53 +65,90 @@ public class PlayerMovement : MonoBehaviour
         if (collision.transform.tag=="ground")
         {
             gm.sfx._sfx(2);
-            print("tanah boy");
         }
-        if (gm.RandomJawaban == 0)//jawaban kanan
+        if (isDragging==true)
+        {
+            if (gm.RandomJawaban == 0)//jawaban kanan
+            {
+                if (collision.transform.tag == "Kanan")
+                {
+                    benar = true;
+                    id = 0;
+                }
+                else if (collision.transform.tag == "Kiri")
+                {
+                    salah = true;
+                    id = 1;
+                }
+            }
+            else //jawaban kiri
+            {
+                if (collision.transform.tag == "Kiri")
+                {
+                    benar = true;
+                    id = 1;
+                }
+                else if (collision.transform.tag == "Kanan")
+                {
+                    salah = true;
+                    id = 0;
+                }
+            }
+        }
+        else if(isDragging==false)
+        {
+            if (benar == true)
+            {
+                print("Benar");
+                Vector3 defaultscale = new Vector3(0.85f, 0.85f, 1);
+                gameObject.transform.localScale = new Vector3(0.85f, 0.85f,1);
+                if (gameObject.transform.localScale == defaultscale)
+                {
+                    transform.position = gm.PosisijawabanBagA[id].position;
+                }
+                gm.JSoalBenar += 1;
+                gm.JSSoal += 1;
+                gm.correctAnsware();
+            }
+            else if (salah == true)
+            {
+                gm.sfx._sfx(3);
+                Vector3 defaultscale = new Vector3(0.85f, 0.85f,1);
+                gameObject.transform.localScale = new Vector3(0.85f, 0.85f, 1);
+                if (gameObject.transform.localScale==defaultscale)
+                {
+                    transform.position = gm.PosisijawabanBagA[id].position;
+                }
+                gm.JSoalSalah += 1;
+                gm.JSSoal += 1;
+                gm.incorrectAnsware();
+
+            }
+        }
+       
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (isDragging==true)
         {
             if (collision.transform.tag == "Kanan")
             {
-                benar = true;
-                transform.position = collision.transform.position;
-                gameObject.transform.localScale = new Vector2(0.85f, 0.85f);
+                if (benar == true)
+                {
+                    benar = false;
 
-                isDragging = false;
-                gm.gameover();
+                }
             }
-            else if(collision.transform.tag=="Kiri")
+            else if (collision.transform.tag == "Kiri")
             {
-                print("salah");
-                gm.sfx._sfx(3);
-                transform.position = collision.transform.position;
-                gameObject.transform.localScale = new Vector2(0.85f, 0.85f);
+                if (salah == true)
+                {
+                    salah = false;
 
-                isDragging = false;
-                gm.gameover();
+                }
             }
         }
-        else //jawaban kiri
-        {
-            if (collision.transform.tag == "Kiri")
-            {
-                benar = true;
-                print("Benar");
-                transform.position = collision.transform.position;
-                gameObject.transform.localScale = new Vector2(0.85f, 0.85f);
-
-                isDragging = false;
-                gm.gameover();
-            }
-            else if (collision.transform.tag == "Kanan")
-            {
-                print("salah");
-                gm.sfx._sfx(3);
-                transform.position = collision.transform.position;
-                gameObject.transform.localScale = new Vector2(0.85f, 0.85f);
-
-                isDragging = false;
-                gm.gameover();
-            }
-            
-        }
+       
     }
 }

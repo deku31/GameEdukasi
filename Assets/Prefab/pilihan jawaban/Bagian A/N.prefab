@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3674399231426925065}
   - component: {fileID: 4439303486896641548}
   - component: {fileID: 7245537983474955345}
+  - component: {fileID: 5664322537561815536}
   m_Layer: 0
   m_Name: N
   m_TagString: Jawaban
@@ -90,7 +91,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5435228044045067793}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -109,3 +110,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5664322537561815536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5435228044045067793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4de5e5f62f3e084cb53e8cb80b2e6a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
