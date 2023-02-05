@@ -8,9 +8,12 @@ public class ButtonScript : MonoBehaviour
 {
     public SoundManager sfx;
     string _scene;
+    public  Animator anim;
+    bool _changescene;
     private void Start()
     {
         sfx = FindObjectOfType<SoundManager>();
+        _changescene = false;
     }
     private void Update()
     {
@@ -18,15 +21,30 @@ public class ButtonScript : MonoBehaviour
         {
             keluar();
         }
+        if (_changescene==true)
+        {
+            if (Input.GetMouseButtonUp(0))
+            {
+                anim.SetTrigger("OntrigerUp");
+                anim.SetBool("Click", false);
+                sfx._sfx(0);
+                StartCoroutine(ChangeScene(0.7f));
+            }
+        }
+    }
+    private void OnMouseDown()
+    {
+       
     }
     public void navigasi(string SceneTujuan)
     {
+        anim.SetBool("Click", true);
+        anim.SetTrigger("OnTrigerDown");
+        _changescene=true;
         _scene = SceneTujuan;
-        sfx._sfx(0);
-        StartCoroutine(ChangeScene(0.8f));
 
     }
-    
+
     public void keluar()
     {
         Application.Quit();

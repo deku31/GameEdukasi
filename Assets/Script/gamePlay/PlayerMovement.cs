@@ -97,9 +97,12 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(isDragging==false)
         {
+
             if (benar == true)
             {
-                print("Benar");
+                gm.sfx.bgm.volume = 0.2f;
+                gm.sfx._alfabet(gm.alffabetId);
+
                 Vector3 defaultscale = new Vector3(0.85f, 0.85f, 1);
                 gameObject.transform.localScale = new Vector3(0.85f, 0.85f,1);
                 if (gameObject.transform.localScale == defaultscale)
@@ -112,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (salah == true)
             {
+                gm.sfx.bgm.volume = 0.2f;
                 gm.sfx._sfx(3);
                 Vector3 defaultscale = new Vector3(0.85f, 0.85f,1);
                 gameObject.transform.localScale = new Vector3(0.85f, 0.85f, 1);
@@ -124,8 +128,9 @@ public class PlayerMovement : MonoBehaviour
                 gm.incorrectAnsware();
 
             }
+
         }
-       
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)

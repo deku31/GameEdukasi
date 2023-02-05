@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
     public GameObject PanelPause;
     public GameObject PanelJawabBenar;
     public GameObject PanelJawabSalah;
+    public GameObject PResult;
+    public Text TotalSoalTxt;
+    public Text BenarTxt;
+    public Text SalahTxt;
+    public Text HighscoreTxt;
 
 
     [Header("Bagian A")]
@@ -42,6 +47,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerMovement playerscript;
     private int randomA;
     public int RandomJawaban;//jawaban akan dirandom kanan atau kiri
+    public int alffabetId;//id alfabet
 
     bool pause=false;
     public bool playing = false;
@@ -94,11 +100,13 @@ public class GameManager : MonoBehaviour
             if (RandomJawaban == 0)//jawaban kanan
             {
                 Instantiate(JawabanPrefab[randomA], PosisijawabanBagA[0]);
+                alffabetId = randomA;
                 terisi[0] = true;
             }
             else if (RandomJawaban > 0)
             {
                 Instantiate(JawabanPrefab[randomA], PosisijawabanBagA[1]);
+                alffabetId = randomA;
                 terisi[1] = true;
             }
             //================mengisi posisi yang kosong=======================================
@@ -234,6 +242,19 @@ public class GameManager : MonoBehaviour
             InstanceObj();
         }
     }
+
+    public void _Presult()
+    {
+        sfx._sfx(0);
+        sfx.bgm.Stop();
+        PResult.SetActive(true);
+        TotalSoalTxt.text = JSSoal.ToString() ;
+        BenarTxt.text = JSoalBenar.ToString();
+        SalahTxt.text = JSoalSalah.ToString();
+        HighscoreTxt.text = skor.ToString();
+        playing = false;
+    }
+
     public void gameover()
     {
         playing = false;
@@ -251,7 +272,6 @@ public class GameManager : MonoBehaviour
         {
             PanelJawabSalah.SetActive(true);
         }
-        sfx.bgm.volume = 0.5f;
         StopCoroutine(showConditionPanel(0));
     }
     IEnumerator WaitingTIme(float time)
