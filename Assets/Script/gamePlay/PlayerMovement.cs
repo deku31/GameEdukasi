@@ -97,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(isDragging==false)
         {
-
             if (benar == true)
             {
                 gm.sfx.bgm.volume = 0.2f;
@@ -126,11 +125,8 @@ public class PlayerMovement : MonoBehaviour
                 gm.JSoalSalah += 1;
                 gm.JSSoal += 1;
                 gm.incorrectAnsware();
-
             }
-
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)

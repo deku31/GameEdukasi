@@ -15,8 +15,7 @@ public class GameManager : MonoBehaviour
     public SoundManager sfx;
 
     [Header("UI")]
-    public Text Header;
-    public GameObject EndingPanel;
+    public Text ResultText;
     public GameObject PanelPause;
     public GameObject PanelJawabBenar;
     public GameObject PanelJawabSalah;
@@ -56,21 +55,22 @@ public class GameManager : MonoBehaviour
 
     string _scene;
 
-
     public int skor;
     public int JSSoal;//jumlah seluruh soal
     public int JSoalBenar=0;//skor benar
     public int JSoalSalah=0;//skor salah
 
+    StorageScript storage;
 
     private void Awake()
     {
+        storage = FindObjectOfType<StorageScript>();
+        storage.Load();
         RandomJawaban = Random.RandomRange(0, 2);
         for (int i = 0; i < terisi.Count; i++)
         {
             terisi[i] = false;
         }
-
     }
     void Start()
     {
@@ -79,7 +79,6 @@ public class GameManager : MonoBehaviour
 
         PanelPause.SetActive(false);
         Time.timeScale = 1;
-        EndingPanel.SetActive(false);
         InstanceObj();
     }
     public void InstanceObj()
@@ -172,17 +171,8 @@ public class GameManager : MonoBehaviour
         }
 
         skor = (JSSoal - JSoalBenar) / 100;
-        print(skor);
-        if (playerscript.benar == true)
-        {
-            Header.text = "Benar";
-            Header.color = new Color32(250, 0, 255, 255);
-        }
-        else
-        {
-            Header.text = "salah";
-            Header.color = new Color32(255, 0, 0, 255);
-        }
+        
+        skor = JSoalBenar;
     }
     public void Navigator(string NamaScene)//masukan nama scene yang di tuju
     {
@@ -245,22 +235,33 @@ public class GameManager : MonoBehaviour
 
     public void _Presult()
     {
+        if (storage.highscore<=skor)
+        {
+            storage.highscore = skor;
+        }
+        storage.save();
         sfx._sfx(0);
         sfx.bgm.Stop();
         PResult.SetActive(true);
-        TotalSoalTxt.text = JSSoal.ToString() ;
+        if (JSoalBenar>=JSoalSalah)
+        {
+            ResultText.text = "Wih Jago";
+            ResultText.color= new Color32(255,226,0,255);
+        }
+        else
+        {
+            ResultText.text = "Yuk Belajar lagi";
+            ResultText.color = new Color32(255, 32, 0, 255);
+
+        }
+        TotalSoalTxt.text = JSSoal.ToString();
         BenarTxt.text = JSoalBenar.ToString();
         SalahTxt.text = JSoalSalah.ToString();
-        HighscoreTxt.text = skor.ToString();
+        HighscoreTxt.text = storage.highscore.ToString();
         playing = false;
     }
 
-    public void gameover()
-    {
-        playing = false;
-        StartCoroutine(ShowGemeover(0.5f));
-    }
-
+   
     IEnumerator showConditionPanel(float time)
     {
         yield return new WaitForSeconds(time);
@@ -280,12 +281,7 @@ public class GameManager : MonoBehaviour
         playing = true;
         StopCoroutine(WaitingTIme(0));
     }
-    IEnumerator ShowGemeover(float time)
-    {
-        yield return new WaitForSeconds(time);
-        EndingPanel.SetActive(true);
-        StopAllCoroutines();
-    }
+    
     IEnumerator ChangeScene(float time)
     {
         yield return new WaitForSeconds(time);

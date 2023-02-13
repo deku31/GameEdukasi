@@ -1324,7 +1324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.88550174, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.12406184, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3045,13 +3045,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d732a213db07072448c5f45653ab0f43, type: 3}
   - {fileID: 8300000, guid: 729bfd09b505140408a661e152424124, type: 3}
   - {fileID: 8300000, guid: 73bc0f9d004177442a3567ecaed56055, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 85068f07de9827f41b896eba682fde13, type: 3}
+  - {fileID: 8300000, guid: d4252959dac7aba438e3ec0690bd820e, type: 3}
+  - {fileID: 8300000, guid: 83536875125e5a7429adacc3a04472bf, type: 3}
+  - {fileID: 8300000, guid: 3cc66698111ac244e93d68de2d0e00cd, type: 3}
+  - {fileID: 8300000, guid: ab32f9d898f559e4baaab46a55d9d19e, type: 3}
+  - {fileID: 8300000, guid: 86cfab9a1e426cc46880db5ad737c425, type: 3}
+  - {fileID: 8300000, guid: c0fa458f5fa424747ab5a0a991377ec9, type: 3}
   - {fileID: 8300000, guid: 83a2fbbe12e7f284f897c30433f9970c, type: 3}
   - {fileID: 8300000, guid: 49c7e19706e3ac1478ea3304411c37fe, type: 3}
   - {fileID: 8300000, guid: 017198d5b75136246820ed22c806a869, type: 3}
@@ -3059,12 +3059,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d3170ad2a13f7b7409490d71d9fa0de1, type: 3}
   - {fileID: 8300000, guid: f12c67b10a2bfc04e9ca5a2bbe77d413, type: 3}
   - {fileID: 8300000, guid: 33b34c33859b57943810f89cb1739142, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: ab28be81406811243affa32737d0cf54, type: 3}
+  - {fileID: 8300000, guid: b0facd6390462354791b66747a989c52, type: 3}
+  - {fileID: 8300000, guid: 9d6723d0c9d0dbb44a03354536089d7e, type: 3}
+  - {fileID: 8300000, guid: c8cd0b5b7cd158e45845ef034945d38b, type: 3}
+  - {fileID: 8300000, guid: 577f084eb218b4244bf50a34c633969a, type: 3}
+  - {fileID: 8300000, guid: aab4c590f2be3344cb30038e4f40f2e9, type: 3}
 --- !u!1 &889111988
 GameObject:
   m_ObjectHideFlags: 0
@@ -3075,6 +3075,7 @@ GameObject:
   m_Component:
   - component: {fileID: 889111989}
   - component: {fileID: 889111990}
+  - component: {fileID: 889111991}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3110,8 +3111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jenis: 1
   sfx: {fileID: 0}
-  Header: {fileID: 98247277}
-  EndingPanel: {fileID: 1825904312}
+  ResultText: {fileID: 367291794}
   PanelPause: {fileID: 260865149}
   PanelJawabBenar: {fileID: 2140162694}
   PanelJawabSalah: {fileID: 471326933}
@@ -3190,6 +3190,19 @@ MonoBehaviour:
   JSSoal: 0
   JSoalBenar: 0
   JSoalSalah: 0
+--- !u!114 &889111991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889111988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1217006a865e5ba45a9d01cdc4d37bdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highscore: 0
 --- !u!1 &896694493
 GameObject:
   m_ObjectHideFlags: 0
@@ -4875,7 +4888,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 10
   m_TargetDisplay: 0
@@ -5318,8 +5331,8 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 889111990}
           m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-          m_MethodName: Navigator
-          m_Mode: 5
+          m_MethodName: _Presult
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
